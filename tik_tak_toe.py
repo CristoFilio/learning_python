@@ -1,16 +1,25 @@
-# This is a game of tic tac toe.
-# This game has five functions.
-# selectmarker - Requests player one to chose x or o, then assigns the other marker to player 2.
-# gamestart - Randomly picks what player will go first and asks if players are ready to play.
-# displayboard - Creates the board by using two lists. One list contains the frame of the board and the other list contains
-#               the index location for the frame list objects and the index location for the number list which contains
-#               the playable board slots to be modified as the game is played.
-# checkwin - Contains a list of index locations in the number list which represent winning conditions
-#           which are compared to the player assigned marker.
-# game - Contains the loops for the game and for each player turn.
+'''
 
-from IPython.display import \
-    clear_output  # Imports clear output module used to clear and refresh the board after each input.
+This is my first project I created while learning the basics.
+I used Jupiter notebook to create it.
+I overcommented this project to help myself during the learning process.
+
+
+This is a game of tic tac toe.
+This game has five functions.
+selectmarker - Requests player one to chose x or o, then assigns the other marker to player 2.
+gamestart - Randomly picks what player will go first and asks if players are ready to play.
+displayboard - Creates the board by using two lists. One list contains the frame of the board and the other list contains
+               the index location for the frame list objects and the index location for the number list which contains
+               the playable board slots to be modified as the game is played.
+checkwin - Contains a list of index locations in the number list which represent winning conditions
+           which are compared to the player assigned marker.
+game - Contains the loops for the game and for each player turn.
+
+'''
+
+
+from IPython.display import clear_output  # Imports clear output module used to clear and refresh the board after each input.
 import random  # Imports random module to randomize what player goes first.
 
 
