@@ -1,6 +1,5 @@
 """
 This is my second project. Over commenting was done for learning purposes.
-
 This is a BlackJack game.
 Features:
 It can be played by multiple players.
@@ -14,7 +13,6 @@ Once a round is over players can decide to keep playing the current game table o
 The game is able to continue while there are still players with funds and players in the game table.
 The players currently on the game can decide to start a new game table, continue the current one or close the game.
 The game closes when there are no remaining players.
-
 Future Version:
 Will revise winning conditions and define functions to shorten the code.
 """
@@ -104,10 +102,10 @@ class PlayerClass:
                 else:  # if the player card total is over 21, then set the status to bust
                     # and substract the bet made from the funds and profits.
 
-                    self.game_profits = self.game_profits - int(self.bet_made)
-                    self.funds -= int(self.bet_made)
+                    self.game_profits = self.game_profits - float(self.bet_made)
+                    self.lost_count += 1
                     self.status = 'BUST'
-                    print(f'Bad luck {self.player} your card total is {self.cardtotal} and went over 21!')
+                    print('Bad luck {} your card total is {} and went over 21!'.format(self.player,self.cardtotal))
                     print('YOU LOST THIS ROUND =(\n\n')
 
     def pholder(self, holder):
@@ -119,25 +117,25 @@ class PlayerClass:
 
         self.bet_made = 250  # set minimum bet to 250
         print(
-            f'{self.player} the minimum bet amount is $250 do you wish to increase it? Your current funds are {self.funds}')
+            '\n{} the minimum bet amount is $250 do you wish to increase it? Your current funds are {}'.format(self.player,self.funds))
 
-        newbet = input('Please enter new amount or type no if you wish to keep the minimum bet')
+        newbet = input('\nPlease enter new amount or type no if you wish to keep the minimum bet')
 
         while newbet != 'no':
 
             '''This while loop checks for the newbet input to be either no or a number higher than 250'''
 
             if newbet[0] in string.ascii_letters:
-                newbet = input('Please enter new amount higher than $250 or type no')
+                newbet = input('\nPlease enter new amount higher than $250 or type no')
                 continue
 
-            if int(newbet) > 250:
+            if float(newbet) > 250:
 
-                while int(newbet) > self.funds:
+                while float(newbet) > self.funds:
 
                     print(
-                        f'{self.player} you cannot bet more than what you have available! Your current funds are {self.funds}')
-                    newbet = input(f'Please enter new amount between $250 and {self.funds} or type no')
+                        '\n{} you cannot bet more than what you have available! Your current funds are {}'.format(self.player,self.funds))
+                    newbet = input('Please enter new amount between $250 and {} or type no'.format(self.funds))
 
                     if newbet[0] in string.ascii_letters:
 
@@ -148,23 +146,23 @@ class PlayerClass:
 
                 else:
 
-                    self.bet_made = int(newbet)
-                    self.funds = self.funds - int(self.bet_made)
+                    self.bet_made = float(newbet)
+                    self.funds = self.funds - float(self.bet_made)
                     break
 
             if newbet == 'no':
                 break
 
-            while int(newbet) < 250:
+            while float(newbet) < 250:
 
-                newbet = input('Please enter new amount higher than $250 or type no')
+                newbet = input('\nPlease enter new amount higher than $250 or type no')
 
                 if newbet == 'no':
                     break
 
         if newbet == 'no':
             self.bet_made = 250
-            self.funds = self.funds - int(self.bet_made)
+            self.funds = self.funds - float(self.bet_made)
 
     def check_game(self):  # this method adds funds to the player according to the winning condition
 
@@ -181,10 +179,10 @@ class PlayerClass:
 
                     self.win_count += 1
                     self.profits = (self.bet_made * 2.5)
-                    self.game_profits = self.game_profits + int(self.bet_made)
+                    self.game_profits = self.game_profits + float(self.bet_made)
                     self.funds = self.funds + self.profits
                     print(
-                        f'{self.player} Congratulations On Your Victory! \n You get extra GAINS for getting a BlackJack Your New Balance is {self.funds}')
+                        '{} Congratulations On Your Victory! \n You get extra GAINS for getting a BlackJack Your New Balance is {}'.format(self.player,self.funds))
 
                 else:
                     '''
@@ -194,11 +192,11 @@ class PlayerClass:
 
                     self.win_count += 1
                     self.profits = (self.bet_made * 2)
-                    self.game_profits = self.game_profits + int(self.bet_made)
+                    self.game_profits = self.game_profits + float(self.bet_made)
                     self.funds = self.funds + self.profits
-                    print(f'{self.player} Congratulations On Your Victory! \n Your New Balance is {self.funds}')
+                    print('{} Congratulations On Your Victory! \n Your New Balance is {}'.format(self.player,self.funds))
 
-                play_again = input(f'{self.player} do you wish to play again? yes or no')
+                play_again = input('{} do you wish to play again? yes or no'.format(self.player))
 
                 '''
                 Asks the player if the want to play again.
@@ -227,21 +225,21 @@ class PlayerClass:
 
                         self.win_count += 1
                         self.profits = (self.bet_made * 2.5)
-                        self.game_profits = self.game_profits + int(self.bet_made)
+                        self.game_profits = self.game_profits + float(self.bet_made)
                         self.funds = self.funds + self.profits
                         print(
-                            f'{self.player} Congratulations On Your Victory! \n '
-                            f'You get extra GAINS for getting a BlackJack Your New Balance is {self.funds}')
+                            '{} Congratulations On Your Victory! \n '.format(self.player),
+                            'You get extra GAINS for getting a BlackJack Your New Balance is {}'.format(self.funds))
 
                     else:
 
                         self.win_count += 1
                         self.profits = (self.bet_made * 2)
-                        self.game_profits = self.game_profits + int(self.bet_made)
+                        self.game_profits = self.game_profits + float(self.bet_made)
                         self.funds = self.funds + self.profits
-                        print(f'{self.player} Congratulations On Your Victory! \nYour New Balance is {self.funds}')
+                        print('{} Congratulations On Your Victory! \nYour New Balance is {}'.format(self.player,self.funds))
 
-                        play_again = input(f'{self.player} do you wish to play again? yes or no')
+                        play_again = input('{} do you wish to play again? yes or no'.format(self.player))
 
                         while play_again != 'yes' and play_again != 'no':
                             play_again = input('Do you wish to play again? yes or no')
@@ -256,22 +254,22 @@ class PlayerClass:
                     If the dealer did not bust and the dealer total is greater than the player.
                     Subtract the bet made from the funds and the profits and add a loss to the player.
                     '''
-                    self.game_profits = self.game_profits - int(self.bet_made)
+                    self.game_profits = self.game_profits - float(self.bet_made)
 
                     if self.funds < 250:
                         # player does not have enough funds and is set to out
                         self.lost_count += 1
                         self.status = 'out'
-                        print(f'{self.player} you do not have enough funds to keep playing better luck next time')
+                        print('{} you do not have enough funds to keep playing better luck next time'.format(self.player))
 
                     else:
                         # add a loss to the player
                         self.lost_count += 1
 
-                        play_again = input(f'{self.player} You Lost this game do you wish to play again? yes or no')
+                        play_again = input('{} You Lost this game do you wish to play again? yes or no'.format(self.player))
 
                         while play_again != 'yes' and play_again != 'no':
-                            play_again = input(f'{self.player} You Lost this game do you wish to play again? yes or no')
+                            play_again = input('{} You Lost this game do you wish to play again? yes or no'.format(self.player))
                         if play_again == 'yes':
                             self.status = 'in'
                         else:
@@ -288,11 +286,11 @@ class PlayerClass:
                 Return bet made and ask if they want to play again
                 """
 
-                self.funds = self.funds + int(self.bet_made)
+                self.funds = self.funds + float(self.bet_made)
 
-                print(f'{self.player} You had a tie with the dealer and you get your bet back {self.funds}')
+                print('{} You had a tie with the dealer and you get your bet back {self.funds}'.format(self.player))
 
-                play_again = input(f'{self.player} You had a tie with the dealer, do you wish to play again? yes or no')
+                play_again = input('{} You had a tie with the dealer, do you wish to play again? yes or no'.format(self.player))
 
                 while play_again != 'yes' and play_again != 'no':
                     play_again = input('Do you wish to play again? yes or no')
@@ -309,20 +307,20 @@ class PlayerClass:
             else:
 
                 self.lost_count += 1
-                self.game_profits = self.game_profits - int(self.bet_made)
+                self.game_profits = self.game_profits - float(self.bet_made)
                 if self.funds < 250:
                     self.status = 'out'
-                    print(f'{self.player} you do not have enough funds to keep playing better luck next time')
+                    print('{} you do not have enough funds to keep playing better luck next time'.format(self.player))
 
                 else:
                     self.lost_count += 1
-                    self.game_profits = self.game_profits - int(self.bet_made)
+                    self.game_profits = self.game_profits - float(self.bet_made)
 
-                    play_again = input(f'{self.player} You Lost this game by BUST do you wish to play again? yes or no')
+                    play_again = input('{} You Lost this game by BUST do you wish to play again? yes or no'.format(self.player))
 
                     while play_again != 'yes' and play_again != 'no':
                         play_again = input(
-                            f'{self.player} You Lost this game by BUST do you wish to play again? yes or no')
+                            '{} You Lost this game by BUST do you wish to play again? yes or no'.format(self.player))
                     if play_again == 'yes':
                         self.status = 'in'
                     else:
@@ -332,13 +330,15 @@ class PlayerClass:
 
         if self.player == 'Dealer':
             if self.game_status == 'pturn':
-                return (f'{self.player} cards : {self.cards}, Hidden Card - Card Total: {self.cardtotal}')
+                return ('\n{} cards : {}, Hidden Card - Card Total: {}'.format(self.player,self.cards,self.cardtotal))
             elif self.game_status == 'dturn':
-                return (f'{self.player} cards: {self.cards} Card Total: {self.cardtotal}')
+                return ('\n{} cards: {} Card Total: {}'.format(self.player,self.cards,self.cardtotal))
 
         else:
             return (
-                f'{self.holder}: {self.player} Balance: {self.funds} Won: {self.win_count} Lost: {self.lost_count} Profits: {self.game_profits}\nCurrent Bet : {self.bet_made}\nCards in play: {self.cards} = {self.cardtotal}\nStatus {self.status}')
+                '\n{}: {} Balance: {} Won: {} Lost: {} Profits: {}\nCurrent Bet : {}\nCards in play: {} = {}\nStatus {}'
+                .format(self.holder,self.player,self.funds,self.win_count,self.lost_count,
+                 self.game_profits,self.bet_made,self.cards,self.cardtotal,self.status))
 
 
 # create shuffle deck
@@ -370,7 +370,7 @@ def deck_shuffle():  # Takes one object as input in this case list deck
 # create players
 
 def num_of_players():
-    players = input('Welcome to BlackJack, how many guests will be playing? ')
+    players = input('Welcome to BlackJack, how many guests will be playing? up to five. ')
 
     playernumbers = ['1', '2', '3', '4', '5']
 
@@ -397,31 +397,31 @@ def player_creator():
         playerlist[x] = True
 
     if playerlist[0] == True:
-        player1 = PlayerClass(input('Player one enter your name'))  # creates an instance of the class if player is on
+        player1 = PlayerClass(input('Player one enter your name '))  # creates an instance of the class if player is on
         player1.pholder('Player One')  # just a holder for the display board
     else:
         player1 = PlayerClass('not playing', 0, 'out')
 
     if playerlist[1] == True:
-        player2 = PlayerClass(input('Player two enter your name'))
+        player2 = PlayerClass(input('Player two enter your name '))
         player2.pholder('Player Two')
     else:
         player2 = PlayerClass('not playing', 0, 'out')
 
     if playerlist[2] == True:
-        player3 = PlayerClass(input('Player three enter your name'))
+        player3 = PlayerClass(input('Player three enter your name '))
         player3.pholder('Player Three')
     else:
         player3 = PlayerClass('not playing', 0, 'out')
 
     if playerlist[3] == True:
-        player4 = PlayerClass(input('Player four enter your name'))
+        player4 = PlayerClass(input('Player four enter your name '))
         player4.pholder('Player Four')
     else:
         player4 = PlayerClass('not playing', 0, 'out')
 
     if playerlist[4] == True:
-        player5 = PlayerClass(input('Player five enter your name'))
+        player5 = PlayerClass(input('Player five enter your name '))
         player5.pholder('Player Five')
     else:
         player5 = PlayerClass('not playing', 0, 'out')
@@ -500,11 +500,12 @@ def gameplay():
             while x.status == 'in':
 
                 hit = input(
-                    f'{x.player} Your current total is: {x.cardtotal} Do you want to draw again? Type stay or draw')
+                    '{} Your current total is: {} Do you want to draw again? Type stay or draw'
+                    .format(x.player,x.cardtotal))
 
                 while hit != 'stay' and hit != 'draw':
                     hit = input(
-                        f'{x.player} Your current total is: {x.cardtotal} Do you want to draw again? Type stay or draw')
+                        '{} Your current total is: {} Do you want to draw again? Type stay or draw'.format(x.player,x.cardtotal))
 
                 if hit == 'stay':
                     break
@@ -514,7 +515,7 @@ def gameplay():
 
             if x.status == 'dealer':
 
-                x.gamestatus = 'dturn'
+                x.game_status = 'dturn'
                 pause = input('It is now the Dealers turn to draw')
                 print(x)
 
@@ -524,7 +525,7 @@ def gameplay():
                     if x.cardtotal > 21:
                         dealertotal = x.cardtotal
                         x.status = 'BUST'
-                        print(f'{x.player} has BUSTED,\nEVERYONE NOT BUSTED WINS!')
+                        print('{} has BUSTED,\nEVERYONE NOT BUSTED WINS!'.format(x.player))
 
                 else:
 
@@ -533,10 +534,10 @@ def gameplay():
         for x in playerlist:
             x.check_game()
 
-        playagain = input(f'Continue or new game? You can also type close to end the game')
+        playagain = input('Continue or new game? You can also type close to end the game')
 
         while playagain != 'continue' and playagain != 'new game' and playagain != 'close':
-            playagain = input(f'Continue or new game? You can also type close to end the game')
+            playagain = input('Continue or new game? You can also type close to end the game')
 
         if playagain == 'continue':
 
