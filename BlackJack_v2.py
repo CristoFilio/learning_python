@@ -91,10 +91,12 @@ class PlayerClass:
         if self.name == 'Dealer':
             if self.game_status == 'player_turn':
                 return ('\n{} cards : {}, Hidden Card\nCard Total: {}'
-                        .format(self.name, ", ".join([card[0] for card in self.cards]), self.card_total))
+                        .format(self.name, ", ".join([card[0] for card in self.cards]),
+                                self.card_total))
             elif self.game_status == 'dealer_turn':
                 return ('\n{} cards: {} \nCard Total: {}'
-                        .format(self.name, ", ".join([card[0] for card in self.cards]), self.card_total))
+                        .format(self.name, ", ".join([card[0] for card in self.cards]),
+                                self.card_total))
         else:
             return (
                 '\n{}: {} | Balance: {} | Won: {} | Lost: {} | Profits: {}\n'
@@ -123,7 +125,7 @@ def game_play():
         dealer = player_list[-1]
         for player in player_list:
             player.check_game(dealer)
-            check_funds(player)
+
         delete_player(player_list)
         start_game = play_again(player_list)
     if not player_check(player_list):
@@ -175,7 +177,6 @@ def initial_draw(player_list):
             print(player, '\n')
             player.p_cards(deck)
         else:
-            player.status = 'in'
             player.p_cards(deck,2)
             print(player)
     return deck
@@ -244,6 +245,8 @@ def keep_playing(player):
         choice = input('{} do you wish to keep playing? yes or no :'.format(player.name))
     if choice == 'no':
         player.status = 'out'
+        return
+    check_funds(player)
 
 def check_funds(player):
     if player.funds < 250:
@@ -256,6 +259,8 @@ def delete_player(player_list):
     for player in player_list:
         if player.status == 'out':
             player_list.remove(player)
+        if player.status == 'BUST':
+            player.status = 'in'
 
 def play_again(player_list):
     choice = ''
