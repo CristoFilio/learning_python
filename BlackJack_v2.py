@@ -1,5 +1,6 @@
 import random
 
+
 class PlayerClass:
     def __init__(self, name='', funds=1000, status='in',
                  game_status='player_turn', holder='player', bet_made=0,
@@ -49,7 +50,7 @@ class PlayerClass:
                 .format(self.name, self.funds))
         new_bet = ''
         while new_bet != 'no':
-            while not new_bet.isnumeric() and new_bet !='no':
+            while not new_bet.isnumeric() and new_bet != 'no':
                 new_bet = input('\nPlease enter new amount higher than $250 or type no :')
                 continue
 
@@ -99,21 +100,23 @@ class PlayerClass:
                                 self.card_total))
         else:
             return (
-                '\n{}: {} | Balance: {} | Won: {} | Lost: {} | Profits: {}\n'
+                    '\n{}: {} | Balance: {} | Won: {} | Lost: {} | Profits: {}\n'
                     .format(self.holder, self.name, self.funds, self.win_count,
-                            self.lost_count, self.game_profits)+
-                'Current Bet : {} | Status: {}\nCards in play: {}\nCard Total: {}'
+                            self.lost_count, self.game_profits) +
+                    'Current Bet : {} | Status: {}\nCards in play: {}\nCard Total: {}'
                     .format(self.bet_made, self.status,
                             ", ".join([card[0] for card in self.cards]), self.card_total))
+
 
 def deck_shuffle():
     symbols = ['Ace', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven',
                'Eight', 'Nine', 'Ten', 'Jack', 'Queen', 'King']
     sleeves = ['Clubs', 'Hearts', 'Spades', 'Diamonds']
-    values = [n for n in [11,2,3,4,5,6,7,8,9,10,10,10,10] for x in range(4)]
-    deck = [(x+' of '+y, values.pop(0))for x in symbols for y in sleeves ]
+    values = [n for n in [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10] for x in range(4)]
+    deck = [(x + ' of ' + y, values.pop(0)) for x in symbols for y in sleeves]
     random.shuffle(deck)
     return deck
+
 
 def game_play():
     player_list = player_creator()
@@ -121,7 +124,7 @@ def game_play():
 
     while start_game != 'no' and player_check(player_list):
         deck = initial_draw(player_list)
-        draw_again(player_list,deck)
+        draw_again(player_list, deck)
         dealer = player_list[-1]
         for player in player_list:
             player.check_game(dealer)
@@ -133,11 +136,13 @@ def game_play():
     else:
         print('Game was closed')
 
+
 def game_start():
     start_game = ''
     while start_game != 'yes' and start_game != 'no':
         start_game = input('Are you ready to start the game? yes or no: ')
     return start_game
+
 
 def player_creator():
     player_list = []
@@ -147,12 +152,13 @@ def player_creator():
     for n in range(players):
         player_list.append(PlayerClass(holder=player_number.pop(0)))
         player_list[-1].name = input('\n{} please enter your name: '
-                                      .format(player_list[-1].holder)).capitalize()
+                                     .format(player_list[-1].holder)).capitalize()
         player_list[-1].p_make_bet()
     dealer = PlayerClass(name='Dealer', status='dealer',
-                               holder='Dealer')
+                         holder='Dealer')
     player_list.append(dealer)
     return player_list
+
 
 def num_of_players():
     players = input('\nWelcome to BlackJack, how many '
@@ -162,11 +168,13 @@ def num_of_players():
                         'enter a maximum of five players:  ')
     return int(players)
 
+
 def player_check(player_list):
     for player in player_list:
         if player.status == 'in':
             return True
     return False
+
 
 def initial_draw(player_list):
     deck = deck_shuffle()
@@ -177,11 +185,12 @@ def initial_draw(player_list):
             print(player, '\n')
             player.p_cards(deck)
         else:
-            player.p_cards(deck,2)
+            player.p_cards(deck, 2)
             print(player)
     return deck
 
-def draw_again(player_list,deck):
+
+def draw_again(player_list, deck):
     for player in player_list:
         while player.status == 'in':
             hit = ''
@@ -205,6 +214,7 @@ def draw_again(player_list,deck):
                     player.status = 'Busted'
                     print('\n{} has BUSTED,\nEVERYONE NOT BUSTED WINS!'.format(player.name))
 
+
 def lost_game(player):
     player.game_profits -= float(player.bet_made)
     player.lost_count += 1
@@ -212,11 +222,13 @@ def lost_game(player):
           'Your New Balance is {}'.format(player.name, player.funds))
     keep_playing(player)
 
+
 def check_win(player):
     if player.card_total == 21:
         black_jack(player)
     else:
         regular_win(player)
+
 
 def regular_win(player):
     player.win_count += 1
@@ -226,6 +238,7 @@ def regular_win(player):
     print('\n{} Congratulations On Your Victory! \n'
           'Your New Balance is {}'.format(player.name, player.funds))
     keep_playing(player)
+
 
 def black_jack(player):
     player.win_count += 1
@@ -239,6 +252,7 @@ def black_jack(player):
         'Your New Balance is {}'.format(player.funds))
     keep_playing(player)
 
+
 def keep_playing(player):
     choice = ''
     while choice != 'yes' and choice != 'no':
@@ -248,11 +262,13 @@ def keep_playing(player):
         return
     check_funds(player)
 
+
 def check_funds(player):
     if player.funds < 250:
         player.status = 'out'
         print('{} you do not have enough funds to '
               'keep playing better luck next time\n'.format(player.name))
+
 
 def delete_player(player_list):
     player_list[-1].status = 'dealer'
@@ -261,6 +277,7 @@ def delete_player(player_list):
             player_list.remove(player)
         if player.status == 'BUST':
             player.status = 'in'
+
 
 def play_again(player_list):
     choice = ''
@@ -278,6 +295,7 @@ def play_again(player_list):
     elif choice == 'close':
         start_game = 'no'
         return start_game
+
 
 if __name__ == '__main__':
     game_play()
