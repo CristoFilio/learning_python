@@ -68,25 +68,28 @@ def game_start(player_list):
 
 
 def display_board(move):
-    fr = [' ___________\n', '|   |   |   |\n', '| ', ' | ', ' |\n',
-          '|___|___|___|\n']  # List of strings that form the frame.
+    frame = [' ___________\n', '|   |   |   |\n', '| ', ' | ', ' |\n']
 
-    board = ([fr[0], fr[1], fr[2], move[0], fr[3], move[1], fr[3], move[2],
-              fr[4], fr[5], fr[1], fr[2], move[3], fr[3], move[4], fr[3], move[5],
-              fr[4], fr[5], fr[1], fr[2], move[6], fr[3], move[7], fr[3], move[8], fr[4], fr[5]])
+    board = ([frame[0],
+              frame[1],
+              frame[2], move[0], frame[3], move[1], frame[3], move[2], frame[4], frame[5],
+              frame[1],
+              frame[2], move[3], frame[3], move[4], frame[3], move[5], frame[4], frame[5],
+              frame[1],
+              frame[2], move[6], frame[3], move[7], frame[3], move[8], frame[4], frame[5]])
 
     print(''.join(map(str, board)))
 
 
-def check_win(numbers, current_player):
-    if ((numbers[0] == numbers[1] == numbers[2] == current_player) or
-            (numbers[3] == numbers[4] == numbers[5] == current_player) or
-            (numbers[6] == numbers[7] == numbers[8] == current_player) or
-            (numbers[0] == numbers[3] == numbers[6] == current_player) or
-            (numbers[1] == numbers[4] == numbers[7] == current_player) or
-            (numbers[2] == numbers[5] == numbers[8] == current_player) or
-            (numbers[6] == numbers[4] == numbers[2] == current_player) or
-            (numbers[0] == numbers[4] == numbers[8] == current_player)):
+def check_win(move, current_marker):
+    if ((move[0] == move[1] == move[2] == current_marker) or
+            (move[3] == move[4] == move[5] == current_marker) or
+            (move[6] == move[7] == move[8] == current_marker) or
+            (move[0] == move[3] == move[6] == current_marker) or
+            (move[1] == move[4] == move[7] == current_marker) or
+            (move[2] == move[5] == move[8] == current_marker) or
+            (move[6] == move[4] == move[2] == current_marker) or
+            (move[0] == move[4] == move[8] == current_marker)):
         return True
     return False
 
