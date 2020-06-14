@@ -247,7 +247,7 @@ def keep_playing(player):
 
 def check_funds(player):
     if player.funds < 250:
-        player.status = 'delete'
+        player.status = 'out'
         print('{} you do not have enough funds to '
               'keep playing better luck next time\n'.format(player.name))
 
